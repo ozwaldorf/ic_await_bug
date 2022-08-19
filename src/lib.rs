@@ -30,10 +30,6 @@ impl Flag {
         self.0.set.store(true, Ordering::Relaxed);
         self.0.waker.wake();
     }
-
-    pub fn status(&self) -> bool {
-        self.0.set.load(Ordering::Relaxed)
-    }
 }
 
 impl Future for Flag {
@@ -84,12 +80,7 @@ impl Flags {
 #[update]
 pub async fn wait() {
     let flag = ic::with_mut(Flags::insert);
-
-    loop {
-        if flag.status() {
-            break;
-        }
-    }
+    flag.await
 
     // Expected: method awaits for signal call and then returns
     // Actual: immediate rejection
