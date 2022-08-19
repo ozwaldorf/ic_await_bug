@@ -14,6 +14,12 @@ Deploying locally:
 make local
 ```
 
+Manually updating candid:
+
+```
+make candid
+```
+
 Cleaning the environment:
 
 ```

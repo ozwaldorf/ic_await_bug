@@ -1,4 +1,4 @@
-.PHONY: replica stop-replica local
+.PHONY: replica stop-replica candid local clean
 
 replica:
 	dfx ping &>/dev/null || dfx start --clean --background
@@ -6,7 +6,10 @@ replica:
 stop-replica:
 	dfx stop
 
-local: replica
+candid:
+	cargo test candid
+
+local: candid replica
 	dfx deploy
 
 clean: stop-replica
